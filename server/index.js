@@ -2,6 +2,7 @@ const getRandomItem = require('./utils/functions/getRandomItem');
 
 require('dotenv').config();
 const app = require('express')();
+const path = require("path");
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
   cors: {
@@ -56,5 +57,12 @@ io.on('connection', socket => {
     updateActiveUsers();
   });
 });
+
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    const indexFile = path.join(__dirname, "dist", "index.html");
+    return res.sendFile(indexFile);
+  });
+}
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}...`));

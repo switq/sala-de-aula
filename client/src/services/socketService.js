@@ -10,6 +10,7 @@ class SocketService {
 
     async connect() {
         this.socket = io(SOCKET_URL);
+        console.log(SOCKET_URL)
 
         this.socket.on('connect', () => {
             dispatch(setUserConnected(this.socket.id));
