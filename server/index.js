@@ -1,10 +1,11 @@
 const getRandomItem = require('./utils/functions/getRandomItem');
- 
+
+require('dotenv').config();
 const app = require('express')();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server, { cors: { origin: 'http://localhost:5173' } });
+const io = require('socket.io')(server, { cors: { origin: process.env.SOCKET_ORIGIN || 'http://localhost:5173' } });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001; // Usa a porta do .env ou 3001 como fallback
 
 let activeUsers = [];
 
@@ -52,4 +53,4 @@ io.on('connection', socket => {
   });
 });
 
-server.listen(PORT, () => console.log('Server running...'));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}...`));
