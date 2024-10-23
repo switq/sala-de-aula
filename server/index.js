@@ -3,7 +3,11 @@ const getRandomItem = require('./utils/functions/getRandomItem');
 require('dotenv').config();
 const app = require('express')();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server, { cors: { origin: process.env.SOCKET_ORIGIN || 'http://localhost:5173' } });
+const io = require('socket.io')(server, {
+  cors: {
+    origin: process.env.SOCKET_ORIGIN || 'http://localhost:5173', methods: ["GET", "POST"],
+  }
+});
 
 const PORT = process.env.PORT || 3001; // Usa a porta do .env ou 3001 como fallback
 
