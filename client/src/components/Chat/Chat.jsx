@@ -22,7 +22,7 @@ export default function Chat({ socket }) {
     return () => {
       socket.off('receive_message')
       socket.off('active_users')
-      
+
     }
   }, [socket])
 
@@ -40,15 +40,10 @@ export default function Chat({ socket }) {
 
     socket.emit('message', message)
     clearInput()
-    focusInput()
   }
 
   const clearInput = () => {
     messageRef.current.value = ''
-  }
-
-  const focusInput = () => {
-    messageRef.current.focus()
   }
 
   const getEnterKey = (e) => {
@@ -62,23 +57,7 @@ export default function Chat({ socket }) {
 
   return (
     <div>
-      <div className={style['chat-container']}>
-        <div className={style["chat-body"]}>
-          {
-            messageList.map((message, index) => (
-              <div className={`${style["message-container"]} ${message.authorId === socket.id && style["message-mine"]}`} key={index}>
-                <div className="message-author"><strong>{message.author}</strong></div>
-                <div className="message-text">{message.text}</div>
-              </div>
-            ))
-          }
-          <div ref={bottomRef} />
-        </div>
-        <div className={style["chat-footer"]}>
-          <Input inputRef={messageRef} placeholder='Mensagem' onKeyDown={(e) => getEnterKey(e)} fullWidth />
-          <SendIcon sx={{ m: 1, cursor: 'pointer' }} onClick={() => handleSubmit()} color="primary" />
-        </div>
-      </div>
+      
     </div>
   )
 }

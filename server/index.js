@@ -1,3 +1,5 @@
+const getRandomItem = require('./utils/functions/getRandomItem');
+ 
 const app = require('express')();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: 'http://localhost:5173' } });
@@ -6,26 +8,33 @@ const PORT = 3001;
 
 let activeUsers = [];
 
-// Função para enviar a lista de usuários ativos para todos os clientes
+const onJoin = ({ username, id, character }) => {
+  const disponibleDesks = [];
+  for (let i = 0; i < 20; i++)
+    if (!activeUsers.some(({ desk }) => desk == i))
+      disponibleDesks.push(i);
+
+  const desk = getRandomItem(disponibleDesks);
+  activeUsers.push({ username, id, character, desk });
+  updateActiveUsers();
+}
+
 const updateActiveUsers = () => {
   io.emit('active_users', activeUsers);
 };
 
 io.on('connection', socket => {
+
   console.log('Usuário conectado!', socket.id);
 
-  // Quando o cliente define o username
-  socket.on('set_username', username => {
+  socket.on('set_user', ({ username, character }) => {
     socket.data.username = username;
+    socket.data.character = character;
 
-    // Adiciona o usuário à lista de ativos
-    activeUsers.push({ id: socket.id, username });
-
-    // Atualiza todos os clientes com a lista de usuários ativos
-    updateActiveUsers();
+    onJoin({ id: socket.id, username, character });
+    console.log(activeUsers)
   });
 
-  // Quando o cliente envia uma mensagem
   socket.on('message', text => {
     io.emit('receive_message', {
       text,
@@ -34,14 +43,11 @@ io.on('connection', socket => {
     });
   });
 
-  // Quando o cliente desconecta
   socket.on('disconnect', reason => {
     console.log('Usuário desconectado!', socket.id);
 
-    // Remove o usuário da lista de ativos
     activeUsers = activeUsers.filter(user => user.id !== socket.id);
 
-    // Atualiza todos os clientes com a nova lista de usuários ativos
     updateActiveUsers();
   });
 });
