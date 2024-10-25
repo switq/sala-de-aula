@@ -14,9 +14,12 @@ const DeskChildren = styled.span`
     position: absolute;
 `
 
-function Desk({ deskId = 0, characterId }) {
+function Desk({ deskId = 0, userId }) {
+    const users = useSelector((state) => state.users);
+    const user = users.find((user) => user.id == userId) || {}
+    const characterId = user?.character >= 0 ? user.character : null
     const desks = useSelector((state) => state?.assets?.desks || [])
-    const desk = desks ? desks[deskId].dataUri : ""
+    const desk = desks ? desks[deskId].dataUri : "";
 
 
     return (

@@ -34,7 +34,6 @@ function Character({ characterID = 0, size = 64, }) {
 
   if (!character) return ''
 
-
   return (
     <CharacterContainer>
       <Spritesheet draggable={false} src={character} alt="character sprite" height={size} />

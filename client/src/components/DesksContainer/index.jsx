@@ -13,7 +13,7 @@ function DesksContainer() {
             newDesks.push({
                 id: i,
                 variation: 0,
-                characterId: null
+                userId: null
             })
         }
         setDesks(newDesks);
@@ -27,7 +27,7 @@ function DesksContainer() {
                 const user = users?.find((user) => user?.desk == desk.id);
                 return ({
                     ...desk,
-                    characterId: user?.character,
+                    userId: user?.id,
                 })
             })
         })
@@ -39,8 +39,8 @@ function DesksContainer() {
 
     return (
         <DesksWrapper>
-            {desks.map(({ id, characterId }) => (
-                <Desk key={id} characterId={characterId} />
+            {desks.map(({ id, userId }) => (
+                <Desk key={id} userId={userId} />
             ))}
         </DesksWrapper>
     );
