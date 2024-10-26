@@ -12,8 +12,8 @@ function MessageList() {
     }
 
     useEffect(() => {
-        console.log(messageList);
-        scrollDown()
+        // console.log(messageList);
+        // scrollDown()
     }, [messageList])
 
     return (

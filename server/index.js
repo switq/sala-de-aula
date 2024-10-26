@@ -4,6 +4,7 @@ require('dotenv').config();
 const app = require('express')();
 const path = require("path");
 const server = require('http').createServer(app);
+const { v4: uuid } = require("uuid")
 const io = require('socket.io')(server, {
   cors: {
     origin: process.env.SOCKET_ORIGIN || 'http://localhost:5173', methods: ["GET", "POST"],
@@ -46,6 +47,7 @@ io.on('connection', socket => {
       text,
       authorId: socket.id,
       author: socket.data.username,
+      id: uuid(),
     });
   });
 

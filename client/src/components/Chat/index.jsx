@@ -3,7 +3,7 @@ import socketService from '../../services/socketService';
 import { useSelector } from 'react-redux';
 import MessageList from './MessageList';
 
-export default function Chat({ socket }) {
+export default function Chat() {
 
   const messageRef = useRef()
 

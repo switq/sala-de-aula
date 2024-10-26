@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import BottomBar from "../../components/BottomBar";
 
 const Room = styled.div`
+    margin-top: 4em;
     display: flex;
     justify-content: center;
     align-items: center;

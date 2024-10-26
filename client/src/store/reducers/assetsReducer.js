@@ -17,6 +17,10 @@ const assetsSlice = createSlice({
             const desks = action.payload;
             state.desks = [...desks];
         },
+        setEmojis(state, action) {
+            const emojis = action.payload;
+            state.emojis = [...emojis]
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -24,4 +28,4 @@ const assetsSlice = createSlice({
 })
 
 export default assetsSlice.reducer;
-export const { setCharacters, setDesks } = assetsSlice.actions;
+export const { setCharacters, setDesks, setEmojis } = assetsSlice.actions;
