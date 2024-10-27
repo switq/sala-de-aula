@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Chat from "../../components/Chat/";
 import { useNavigate } from "react-router";
 import BottomBar from "../../components/BottomBar";
+import EmojiBar from "../../components/EmojiBar";
 
 const Room = styled.div`
     margin-top: 4em;
@@ -21,6 +22,7 @@ const BackButton = () => {
 }
 
 function Classroom() {
+    
 
     return (
         <ConnectionProvider>
@@ -29,7 +31,11 @@ function Classroom() {
                     <DesksContainer />
                 </Room>
                 <BackButton />
-                <BottomBar />
+
+                <div className="right-0 bottom-0 absolute flex text-center justify-center gap-4 p-4">
+                    <EmojiBar />
+                    <BottomBar />
+                </div>
             </div>
         </ConnectionProvider>
     );

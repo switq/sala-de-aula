@@ -1,12 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Drawer } from 'vaul';
 import Chat from '../Chat';
+import { useDispatch, useSelector } from 'react-redux';
 
-const BottomBar = ({ children }) => {
+const BottomBar = () => {
+    const [open, setOpen] = React.useState(false);
+    const openChat = () => setOpen(true);
+    const scrollToMessage = useSelector(state => state.app.chat.scrollToMessage);
+
+
+    useEffect(() => {
+        if (scrollToMessage)
+            openChat()
+    }, [scrollToMessage]);
 
     return (
-        <Drawer.Root>
-            <Drawer.Trigger className="right-0 bottom-0 absolute flex h-10 flex-shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full bg-white px-4 text-sm font-medium shadow-sm transition-all hover:bg-[#FAFAFA] dark:bg-[#161615] dark:hover:bg-[#1A1A19] dark:text-white">
+        <Drawer.Root open={open} onOpenChange={setOpen}>
+            <Drawer.Trigger className=" flex h-10 flex-shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full bg-white px-4 text-sm font-medium shadow-sm transition-all hover:bg-[#FAFAFA] dark:bg-[#161615] dark:hover:bg-[#1A1A19] dark:text-white">
                 Chat
             </Drawer.Trigger>
             <Drawer.Portal>

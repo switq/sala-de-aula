@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     body {
         width: 100vw;
         height: 100vh;
+        overflow: hidden;
         background: #493d5b;
         color: #fff;
         font-family: 'Pixelify Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;

@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     characters: [],
-    desks: []
+    desks: [],
+    emojis: []
 };
 
 const assetsSlice = createSlice({

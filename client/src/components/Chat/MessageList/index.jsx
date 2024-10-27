@@ -1,34 +1,68 @@
-import { useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
-import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { memo, useEffect, useRef, useState } from "react";
+import MessageBox from "../MessageBox";
 
 function MessageList() {
     const messageList = useSelector((state) => state.messages) || [];
-    const actualUser = useSelector(state => state.auth.id);
-    const bottomRef = useRef()
+    const actualUser = useSelector((state) => state.auth.id);
+    const bottomRef = useRef();
+    const containerRef = useRef();
+    const messageRefs = useRef({}); // Armazena referências de cada mensagem
+    const dispatch = useDispatch();
+    const messageToScroll = useSelector(state => state.app.chat.scrollToMessage);
+
+
+    const [isAtBottom, setIsAtBottom] = useState(false); // Estado para verificar se o usuário está no final
+
+    const scrollToMessage = (messageId) => {
+        const targetElement = document.getElementById(messageId);
+        if (targetElement)
+            targetElement?.scrollIntoView({ behavior: "smooth" });
+        else
+            scrollDown();
+    };
 
     const scrollDown = () => {
-        bottomRef.current.scrollIntoView({ behavior: 'smooth' })
-    }
+        bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    };
+
+
+    const handleScroll = () => {
+        if (!containerRef.current) return;
+        const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+        const isBottom = scrollTop + clientHeight >= scrollHeight - 40; // Compara com um pequeno buffer
+        setIsAtBottom(isBottom);
+    };
+
 
     useEffect(() => {
-        // console.log(messageList);
-        // scrollDown()
-    }, [messageList])
+        if (isAtBottom)
+            scrollDown(); // Somente faz scroll quando uma nova mensagem é adicionada e o usuário está no final
+    }, [messageList]);
+
+    useEffect(() => {
+        if (messageToScroll)
+            scrollToMessage(messageToScroll.id);
+    }, [messageToScroll]);
 
     return (
-        <div className="px-2 overflow-y-scroll text-black flex flex-col h-full">
-            {
-                messageList.map((message, index) => (
-                    <div className={`max-w-[250px] w-fit bg-white mt-2 px-2 py-1 rounded-lg self-start ${actualUser == message.authorId && "bg-yellow-300 self-end"}`} key={index}>
-                        <div className="message-author"><strong>{message.author}</strong></div>
-                        <div className="message-text">{message.text}</div>
-                    </div>
-                ))
-            }
+        <div
+            ref={containerRef}
+            onScroll={handleScroll}
+            className="px-2 overflow-y-scroll text-black flex flex-col h-full"
+        >
+            {messageList.map((message) => (
+                <span id={message.id} key={message.id}>
+                    <MessageBox
+                        text={message.text}
+                        author={message.author}
+                        isAuthor={actualUser === message.authorId}
+                    />
+                </span>
+            ))}
             <div ref={bottomRef} />
         </div>
     );
 }
 
-export default MessageList;
+export default memo(MessageList);

@@ -23,12 +23,13 @@ function Desk({ deskId = 0, userId }) {
     const desks = useSelector((state) => state?.assets?.desks || [])
     const desk = desks ? desks[deskId].dataUri : "";
     const messages = useSelector((state) => state.messages.filter(mes => mes.authorId == user.id));
-    const lastMessage = messages.length ? messages[messages?.length - 1].text : ""
+    const lastMessage = messages.length ? messages[messages?.length - 1] : {}
 
     useEffect(() => {
         console.log(lastMessage)
     }, [lastMessage]);
 
+    
 
     return (
         <DeskContainer>
@@ -38,7 +39,7 @@ function Desk({ deskId = 0, userId }) {
                         <Character characterID={characterId} size={size} />
                     </DeskChildren>
                     <DeskChildren>
-                        <BaloonMesage message={lastMessage} />
+                        <BaloonMesage message={lastMessage?.text || ""} messageId={lastMessage?.id} />
                     </DeskChildren>
                 </>
             )}
