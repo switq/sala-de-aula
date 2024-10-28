@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCharacter } from "../../store/reducers/authReducer";
+import Arrow from "../../assets/UI/arrow.svg"
 
 function CharacterSelector() {
     const characters = useSelector(state => state.assets.characters || []);
-    const [characterID, setCharacterID] = useState(0);
+    const auth = useSelector(state => state.auth);
+    const [characterID, setCharacterID] = useState(auth?.character || 0);
     const dispatch = useDispatch();
 
     const next = () => {
@@ -22,21 +24,31 @@ function CharacterSelector() {
     }
 
     return (
-        <>
-            <h3>Select Your character:</h3>
+        <div className=" flex flex-col justify-center items-center">
 
+            <h3>Select Your character:</h3>
             <SelectorContainer>
-                <button onClick={back}> {'<'} </button>
-                <Character characterID={characterID} size={200} />
-                <button onClick={next}> {'>'} </button>
+                <img src={Arrow} width={46} onClick={back} className="cursor-pointer"/>
+                <div className="relative">
+                    <div className="absolute w-full h-full bg-[#2022]"/>
+                    <Character characterID={characterID} size={200} />
+                </div>
+                <FlippedImg src={Arrow} width={46} onClick={next} className="cursor-pointer" />
             </SelectorContainer>
-        </>
+        </div>
     );
 }
 
 const SelectorContainer = styled.div`
     display: flex;
     align-items: center;
+`
+
+const FlippedImg = styled.img`
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
 `
 
 

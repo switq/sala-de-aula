@@ -2,8 +2,6 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 
-    @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
-
     * {
         margin: 0;
         padding: 0;
@@ -16,8 +14,13 @@ const GlobalStyle = createGlobalStyle`
         overflow: hidden;
         background: #493d5b;
         color: #fff;
-        font-family: 'Pixelify Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-family: "Pixelify Sans", serif;
     }
+
+    input, button {
+        font-family: "Pixelify Sans", serif;
+    }
+    
 `
 
 export default GlobalStyle;

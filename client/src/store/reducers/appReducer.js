@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     chat: {
-        scrollToMessage: '',
+        scrollToMessage: {},
     }
 };
 
@@ -13,6 +13,9 @@ const appSlice = createSlice({
         scrollToMessage(state, { payload }) {
             console.log(payload)
             state.chat.scrollToMessage = { id: payload || "", count: state.chat.scrollToMessage + 1 };
+        },
+        cleanScroll(state, action) {
+            state.chat.scrollToMessage = {}
         }
     },
     extraReducers: (builder) => {
@@ -21,4 +24,4 @@ const appSlice = createSlice({
 })
 
 export default appSlice.reducer;
-export const { scrollToMessage } = appSlice.actions;
+export const { scrollToMessage, cleanScroll } = appSlice.actions;

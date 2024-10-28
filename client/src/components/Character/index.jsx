@@ -8,8 +8,9 @@ function Character({ characterID = 0, size = 64, }) {
 
   const characters = useSelector((state) => state?.assets?.characters);
   const character = characters ? characters[characterID]?.dataUri : '';
-  const width = characters ? characters[characterID]?.width : 64;
-  const steps = width / 32
+  const width = characters ? characters[characterID]?.width || 64 : 64;
+  const height = characters ? characters[characterID]?.height || 32 : 32;
+  const steps = width / (height)
   const duration = `${1}s`;
 
 

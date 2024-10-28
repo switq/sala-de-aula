@@ -52,13 +52,13 @@ function MessageList() {
             className="px-2 overflow-y-scroll text-black flex flex-col h-full"
         >
             {messageList.map((message) => (
-                <span id={message.id} key={message.id}>
+                <div id={message.id} key={message.id} className="w-full">
                     <MessageBox
                         text={message.text}
                         author={message.author}
                         isAuthor={actualUser === message.authorId}
                     />
-                </span>
+                </div>
             ))}
             <div ref={bottomRef} />
         </div>

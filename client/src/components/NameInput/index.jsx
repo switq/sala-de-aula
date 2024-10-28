@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUsername } from "../../store/reducers/authReducer";
 
 function NameInput() {
-    const [name, setName] = useState('');
+    const auth = useSelector(state => state.auth);
+    const [name, setName] = useState(auth.username || '');
     const dispatch = useDispatch();
+
 
     const onChange = (e) => {
         const value = e.target.value || "";
@@ -13,10 +15,14 @@ function NameInput() {
     }
 
     return (
-        <>
+        <div>
             <h3>Name:</h3>
-            <input value={name} onChange={onChange} type="text" />
-        </>
+            <input
+                class="h-4 p-3  bg-white text-gray-800 placeholder-gray-400 font-pixel text-sm border-4 border-gray-300  outline-none shadow-[4px_4px_0px_#D1D5DB] focus:shadow-[2px_2px_0px_#9CA3AF] transition-shadow"
+                value={name}
+                onChange={onChange}
+                type="text" />
+        </div>
     );
 }
 

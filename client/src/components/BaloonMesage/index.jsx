@@ -17,9 +17,10 @@ function BaloonMesage({ message, messageId }) {
     }
 
     return (
-        <div onClick={onClickEmoji} className='cursor-pointer ml-[67px] mt-[-5px] flex justify-center items-center '>
+        <div className='ml-[67px] mt-[-5px] flex justify-center items-center '>
             <BaloonImg src={baloon} alt="" height={86} draggable={false} />
             <BaloonImg src={emoji?.dataUri} height={32} width={32} draggable={false} />
+            <div onClick={onClickEmoji} className=' z-10 w-[42px] h-[43px] absolute cursor-pointer ' />
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import socketService from "../../services/socketService";
+import EmojiButtomSvg from "../../assets/UI/emojiBut.svg"
 
 function EmojiBar() {
     const emojis = useSelector(state => state.assets.emojis);
@@ -23,7 +24,7 @@ function EmojiBar() {
                     {emojis.map(({ dataUri, name }) => <img key={name} onClick={() => sendEmoji(name)} className="cursor-pointer" draggable={false} src={dataUri} width={46} height={46} />)}
                 </div>
             </div>
-            <button onClick={toggle} className="">Emojis</button>
+            <img src={EmojiButtomSvg} onClick={toggle} className="cursor-pointer" height={64} width={64} />
         </div>
     );
 }
