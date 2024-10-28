@@ -4,6 +4,7 @@ import { setCharacters, setDesks, setEmojis } from "../store/reducers/assetsRedu
 import loadCharacters from "../assets/character-sprites";
 import loadDesks from "../assets/furniture-sprites/desks";
 import loadEmojis from "../assets/emojis-sprites";
+import Loading from "../components/Loading";
 
 function AssetsProvider({ children }) {
     const [isLoading, setIsLoading] = useState(true);
@@ -21,19 +22,19 @@ function AssetsProvider({ children }) {
             loadEmojis()
         ])
 
-    dispatch(setCharacters(characters));
-    dispatch(setDesks(desks));
-    dispatch(setEmojis(emojis));
+        dispatch(setCharacters(characters));
+        dispatch(setDesks(desks));
+        dispatch(setEmojis(emojis));
 
-    setIsLoading(false);
-}
+        setIsLoading(false);
+    }
 
-useEffect(() => {
-    loadAssets();
-}, []);
+    useEffect(() => {
+        loadAssets();
+    }, []);
 
-if (isLoading) return <div>Loading</div>
-return (children);
+    if (isLoading) return <Loading />
+    return (children);
 }
 
 export default AssetsProvider;

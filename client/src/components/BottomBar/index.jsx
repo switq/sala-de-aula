@@ -18,7 +18,7 @@ const BottomBar = () => {
     return (
         <Drawer.Root open={open} onOpenChange={setOpen}>
             <Drawer.Trigger className='bg-transparent outline-none border-none'>
-                <img src={ChatButtomSvg} className="cursor-pointer" height={64} width={64} />
+                <img draggable={false} src={ChatButtomSvg} className="cursor-pointer" height={64} width={64} />
             </Drawer.Trigger>
             <Drawer.Portal className={"absolute"}>
                 <Drawer.Overlay className="fixed inset-0 bg-black/40" />

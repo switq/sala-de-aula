@@ -11,7 +11,6 @@ const appSlice = createSlice({
     initialState,
     reducers: {
         scrollToMessage(state, { payload }) {
-            console.log(payload)
             state.chat.scrollToMessage = { id: payload || "", count: state.chat.scrollToMessage + 1 };
         },
         cleanScroll(state, action) {

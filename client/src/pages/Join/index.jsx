@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CharacterSelector from "../../components/CharacterSelector";
 import NameInput from "../../components/NameInput";
 import { JoinContainer } from "./styles";
@@ -7,11 +7,13 @@ import socketService from "../../services/socketService";
 import { useNavigate } from 'react-router-dom';
 import { cleanScroll } from "../../store/reducers/appReducer";
 import styled from "styled-components";
+import Loading from "../../components/Loading";
 
 function Join() {
     const navigate = useNavigate();
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (auth.isConnected)
@@ -19,24 +21,32 @@ function Join() {
         dispatch(cleanScroll())
     }, []);
 
-
     const submit = async () => {
         const { username, character } = auth;
         if (!username.trim()) return;
-
+        setLoading(true)
         await socketService.connect();
         await socketService.sendMessage('set_user', { username, character })
         navigate("/classroom");
+        setLoading(false)
+    }
+
+    if (loading) {
+        return (
+            <Loading characterID={auth?.character} />
+        )
     }
 
     return (
-        <JoinContainer>
-            <CharacterSelector />
-            <div>
-                <NameInput />
-                <CustomButton onClick={submit}>Join</CustomButton>
-            </div>
-        </JoinContainer>
+        <div className="h-[100vh] flex items-center justify-center">
+            <JoinContainer>
+                <CharacterSelector />
+                <div>
+                    <NameInput />
+                    <CustomButton onClick={submit}>Join</CustomButton>
+                </div>
+            </JoinContainer>
+        </div>
     );
 }
 

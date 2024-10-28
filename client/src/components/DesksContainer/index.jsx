@@ -20,7 +20,6 @@ function DesksContainer() {
     }, []);
 
     useEffect(() => {
-        console.log(users)
         setDesks((oldDesks) => {
             const newDesks = [...oldDesks];
             return newDesks.map(desk => {
@@ -32,10 +31,6 @@ function DesksContainer() {
             })
         })
     }, [users]);
-
-    useEffect(() => {
-        console.log(desks)
-    }, [desks]);
 
     return (
         <DesksWrapper>

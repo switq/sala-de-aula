@@ -25,12 +25,6 @@ function Desk({ deskId = 0, userId }) {
     const messages = useSelector((state) => state.messages.filter(mes => mes.authorId == user.id));
     const lastMessage = messages.length ? messages[messages?.length - 1] : {}
 
-    useEffect(() => {
-        console.log(lastMessage)
-    }, [lastMessage]);
-
-    
-
     return (
         <DeskContainer>
             {characterId >= 0 && characterId !== null && (

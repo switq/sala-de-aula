@@ -1,14 +1,14 @@
 import Character from "../Character";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCharacter } from "../../store/reducers/authReducer";
 import Arrow from "../../assets/UI/arrow.svg"
 
 function CharacterSelector() {
     const characters = useSelector(state => state.assets.characters || []);
-    const auth = useSelector(state => state.auth);
-    const [characterID, setCharacterID] = useState(auth?.character || 0);
+    const character = useSelector(state => state.auth?.character);
+    const [characterID, setCharacterID] = useState(character || 0);
     const dispatch = useDispatch();
 
     const next = () => {
@@ -24,7 +24,7 @@ function CharacterSelector() {
     }
 
     return (
-        <div className=" flex flex-col justify-center items-center">
+        <div className=" flex flex-col justify-center items-center gap-2">
 
             <h3>Select Your character:</h3>
             <SelectorContainer>
@@ -52,4 +52,4 @@ const FlippedImg = styled.img`
 `
 
 
-export default CharacterSelector;
+export default memo(CharacterSelector);

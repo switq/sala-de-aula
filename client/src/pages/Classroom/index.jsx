@@ -6,36 +6,37 @@ import Chat from "../../components/Chat/";
 import { useNavigate } from "react-router";
 import BottomBar from "../../components/BottomBar";
 import EmojiBar from "../../components/EmojiBar";
+import Arrow from "../../assets/UI/arrow.svg"
 
 const Room = styled.div`
-    margin-top: 4em;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 `
 
 const BackButton = () => {
     const navigate = useNavigate();
     const onClick = () => navigate('/')
 
-    return <button className="absolute top-0 left-0" onClick={onClick}>{'<'}</button>
+    return <img className="cursor-pointer absolute top-0 left-0 p-2" onClick={onClick} src={Arrow} height={48}/>
 }
 
 function Classroom() {
-    
+
 
     return (
         <ConnectionProvider>
-            <div>
+            <div className="h-[100vh] flex flex-col">
                 <Room>
                     <DesksContainer />
                 </Room>
-                <BackButton />
 
-                <div className="right-0 bottom-0 absolute flex text-center justify-center gap-4 p-4">
+                <div className="flex text-center justify-center gap-4 p-4">
                     <EmojiBar />
                     <BottomBar />
                 </div>
+                <BackButton />
             </div>
         </ConnectionProvider>
     );
