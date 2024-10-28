@@ -23,18 +23,21 @@ function CharacterSelector() {
         dispatch(setCharacter(newValue));
     }
 
+    const authorName = useSelector(state => state?.assets?.characters[character].name)?.match(/-(.*)/)?.[1].trim() || "unknown"
+
     return (
         <div className=" flex flex-col justify-center items-center gap-2">
 
             <h3>Select Your character:</h3>
             <SelectorContainer>
-                <img src={Arrow} width={46} onClick={back} className="cursor-pointer"/>
+                <img src={Arrow} width={46} onClick={back} className="cursor-pointer" />
                 <div className="relative">
-                    <div className="absolute w-full h-full bg-[#2022]"/>
+                    <div className="absolute w-full h-full bg-[#2022]" />
                     <Character characterID={characterID} size={200} />
                 </div>
                 <FlippedImg src={Arrow} width={46} onClick={next} className="cursor-pointer" />
             </SelectorContainer>
+            <h3 className="">{authorName}</h3>
         </div>
     );
 }

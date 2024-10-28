@@ -9,12 +9,20 @@ const loadCharacters = async () => {
 
     for (const path in svgs) {
         const content = await svgs[path]();
-        svgArray.push(content);
+
+        const name = path.split('/').pop().replace('.svg', '');
+
+        svgArray.push({ content, name });
     }
 
-    const character = svgArray.map(svg => ({ dataUri: svgToDataUri(svg), width: getSvgWidth(svg), height: getSvgHeight(svg) }));
+    const characters = svgArray.map(({ content, name }) => ({
+        dataUri: svgToDataUri(content),
+        width: getSvgWidth(content),
+        height: getSvgHeight(content),
+        name: name,
+    }));
 
-    return character
+    return characters;
 };
 
 export default loadCharacters;
