@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         width: 100vw;
-        /* height: 100vh; */
+        height: 100dvh;
         overflow: hidden;
         background: #493d5b;
         color: #fff;
