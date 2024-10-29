@@ -9,18 +9,7 @@ const updateActiveUsers = (io) => {
 };
 
 // Função para lidar com a entrada de um novo usuário
-const onJoin = ({ io, username, id, character, ipCli }) => {
-    // Desconecta e remove usuários com o mesmo IP
-    // activeUsers
-    //     .filter(user => user.ipCli === ipCli)
-    //     .forEach(user => {
-    //         const existingSocket = io.sockets.sockets.get(user.id);
-    //         if (existingSocket) {
-    //             existingSocket.disconnect(true);
-    //         }
-    //     });
-
-    // activeUsers = activeUsers.filter(user => user.ipCli !== ipCli);
+const onJoin = ({ io, username, id, character }) => {
 
     // Garante que o nome de usuário seja único
     let finalUsername = username;
@@ -34,7 +23,7 @@ const onJoin = ({ io, username, id, character, ipCli }) => {
     );
 
     const desk = getRandomItem(availableDesks);
-    activeUsers.push({ username: finalUsername, id, character, desk, ipCli });
+    activeUsers.push({ username: finalUsername, id, character, desk, });
     updateActiveUsers(io);
 
     return { success: true };
@@ -50,15 +39,14 @@ const setupSocketHandlers = (server) => {
     });
 
     io.on('connection', (socket) => {
-        socket.on('set_user', ({ username, character, ipCli }) => {
-            socket.data = { username, character, ipCli };
+        socket.on('set_user', ({ username, character }) => {
+            socket.data = { username, character };
 
             const result = onJoin({
                 io,
                 id: socket.id,
                 username,
                 character,
-                ipCli
             });
 
             if (!result.success) {

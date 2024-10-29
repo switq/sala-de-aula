@@ -9,17 +9,6 @@ import { cleanScroll } from "../../store/reducers/appReducer";
 import styled from "styled-components";
 import Loading from "../../components/Loading";
 
-const getClientIP = async () => {
-    try {
-        const response = await fetch("https://api.ipify.org?format=json");
-        const data = await response.json();
-        return data.ip;
-    } catch (error) {
-        console.error("Erro ao obter IP:", error);
-        return null;
-    }
-};
-
 
 function Join() {
     const navigate = useNavigate();
@@ -36,11 +25,8 @@ function Join() {
     const submit = async () => {
         const { username, character } = auth;
         if (!username.trim()) return;
-
         await socketService.connect();
-        const ipCli = await getClientIP();
-        console.log(ipCli);
-        await socketService.sendMessage('set_user', { username, character, ipCli });
+        await socketService.sendMessage('set_user', { username, character });
         navigate("/classroom");
     };
 
@@ -54,7 +40,7 @@ function Join() {
             <JoinContainer>
                 <CharacterSelector />
                 <div>
-                    <NameInput />
+                    <NameInput submit={submit} />
                     <CustomButton onClick={submit}>Join</CustomButton>
                 </div>
             </JoinContainer>

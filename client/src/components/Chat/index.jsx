@@ -34,7 +34,8 @@ export default function Chat() {
       <MessageList />
       <div className='flex justify-stretch w-full items-center gap-2'>
         <input
-          type="text" onKeyDown={(e) => getEnterKey(e)}
+          type="text" 
+          onKeyDown={(e) => getEnterKey(e)}
           className="h-4 p-4 w-full bg-white text-gray-800 placeholder-gray-400 font-pixel text-sm border-4 border-gray-300  outline-none shadow-[4px_4px_0px_#D1D5DB] focus:shadow-[2px_2px_0px_#9CA3AF] transition-shadow"
           ref={messageRef}
         />
