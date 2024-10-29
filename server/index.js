@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 3001; // Usa a porta do .env ou 3001 como fallb
 let activeUsers = [];
 
 const onJoin = ({ username, id, character, ip }) => {
+  console.log(username, ip)
   // Checa se já existe um usuário conectado com o mesmo IP
   if (activeUsers.some(user => user.ip === ip)) {
     return { success: false, message: "User from this device is already connected" };
