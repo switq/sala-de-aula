@@ -15,9 +15,13 @@ const PORT = process.env.PORT || 3001; // Usa a porta do .env ou 3001 como fallb
 
 let activeUsers = [];
 
-const onJoin = ({ username, id, character }) => {
-  let finalUsername = username;
+const onJoin = ({ username, id, character, ip }) => {
+  // Checa se já existe um usuário conectado com o mesmo IP
+  if (activeUsers.some(user => user.ip === ip)) {
+    return { success: false, message: "User from this device is already connected" };
+  }
 
+  let finalUsername = username;
   // Checa se o username já está em uso
   while (activeUsers.some(user => user.username === finalUsername)) {
     finalUsername = `Copy of ${finalUsername}`;
@@ -31,8 +35,10 @@ const onJoin = ({ username, id, character }) => {
   }
 
   const desk = getRandomItem(disponibleDesks);
-  activeUsers.push({ username: finalUsername, id, character, desk });
+  activeUsers.push({ username: finalUsername, id, character, desk, ip });
   updateActiveUsers();
+
+  return { success: true };
 };
 
 const updateActiveUsers = () => {
@@ -40,14 +46,22 @@ const updateActiveUsers = () => {
 };
 
 io.on('connection', socket => {
-  console.log('Usuário conectado!', socket.id);
+  const clientIp = socket.handshake.address; // Obtém o IP do cliente
+  console.log('Usuário conectado!', socket.id, clientIp);
 
   socket.on('set_user', ({ username, character }) => {
     socket.data.username = username;
     socket.data.character = character;
+    socket.data.ip = clientIp;
 
-    onJoin({ id: socket.id, username, character });
-    console.log(activeUsers);
+    const result = onJoin({ id: socket.id, username, character, ip: clientIp });
+
+    if (!result.success) {
+      socket.emit('error', result.message); // Notifica o cliente sobre a conexão bloqueada
+      socket.disconnect(); // Desconecta o cliente
+    } else {
+      console.log(activeUsers);
+    }
   });
 
   socket.on('message', text => {
