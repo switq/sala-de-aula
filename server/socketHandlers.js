@@ -11,16 +11,16 @@ const updateActiveUsers = (io) => {
 // Função para lidar com a entrada de um novo usuário
 const onJoin = ({ io, username, id, character, ipCli }) => {
     // Desconecta e remove usuários com o mesmo IP
-    activeUsers
-        .filter(user => user.ipCli === ipCli)
-        .forEach(user => {
-            const existingSocket = io.sockets.sockets.get(user.id);
-            if (existingSocket) {
-                existingSocket.disconnect(true);
-            }
-        });
+    // activeUsers
+    //     .filter(user => user.ipCli === ipCli)
+    //     .forEach(user => {
+    //         const existingSocket = io.sockets.sockets.get(user.id);
+    //         if (existingSocket) {
+    //             existingSocket.disconnect(true);
+    //         }
+    //     });
 
-    activeUsers = activeUsers.filter(user => user.ipCli !== ipCli);
+    // activeUsers = activeUsers.filter(user => user.ipCli !== ipCli);
 
     // Garante que o nome de usuário seja único
     let finalUsername = username;
