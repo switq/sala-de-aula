@@ -16,6 +16,7 @@ const Room = styled.div`
 `
 
 const BackButton = () => {
+    
     const navigate = useNavigate();
     const onClick = () => navigate('/')
 
@@ -23,11 +24,22 @@ const BackButton = () => {
 }
 
 function Classroom() {
+    useEffect(() => {
+        const handleResize = () => {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
 
     return (
         <ConnectionProvider>
-            <div className="h-[100vh] flex flex-col">
+            <div className="h-[calc(100*var(--vh))] flex flex-col">
                 <Room>
                     <DesksContainer />
                 </Room>
