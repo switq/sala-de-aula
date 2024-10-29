@@ -23,7 +23,7 @@ const BottomBar = () => {
             <Drawer.Portal className={"absolute"}>
                 <Drawer.Overlay className="fixed inset-0 bg-black/40" />
                 <Drawer.Content className="bg-gray-400 flex flex-col rounded-t-[10px] mt-24 h-[80%] lg:h-[90%] fixed bottom-0 left-0 right-0 outline-none">
-                    <div className=" bg-gray-400 rounded-t-[10px] flex-1 overflow-y-hidden">
+                    <div className=" bg-[#493D5B] rounded-t-[10px] flex-1 overflow-y-hidden">
                         <div className="max-w-[34em] mx-auto h-full flex flex-col">
                             <Drawer.Title className='hidden'>AAA</Drawer.Title>
                             <Chat />

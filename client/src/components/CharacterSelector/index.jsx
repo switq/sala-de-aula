@@ -37,7 +37,7 @@ function CharacterSelector() {
                 </div>
                 <FlippedImg src={Arrow} width={46} onClick={next} className="cursor-pointer" />
             </SelectorContainer>
-            <h3 className="">{authorName}</h3>
+            <h3 className="font-thin">{authorName && "criador: " + authorName}</h3>
         </div>
     );
 }

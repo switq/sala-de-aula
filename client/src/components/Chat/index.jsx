@@ -30,12 +30,12 @@ export default function Chat() {
 
 
   return (
-    <div className='h-full flex justify-between flex-col p-6 gap-4'>
+    <div className='h-full flex justify-between flex-col p-6 gap-4 '>
       <MessageList />
       <div className='flex justify-stretch w-full items-center gap-2'>
         <input
           type="text" onKeyDown={(e) => getEnterKey(e)}
-          class="h-4 p-4 w-full bg-white text-gray-800 placeholder-gray-400 font-pixel text-sm border-4 border-gray-300  outline-none shadow-[4px_4px_0px_#D1D5DB] focus:shadow-[2px_2px_0px_#9CA3AF] transition-shadow"
+          className="h-4 p-4 w-full bg-white text-gray-800 placeholder-gray-400 font-pixel text-sm border-4 border-gray-300  outline-none shadow-[4px_4px_0px_#D1D5DB] focus:shadow-[2px_2px_0px_#9CA3AF] transition-shadow"
           ref={messageRef}
         />
         <img onClick={handleSubmit} src={Send} alt="" className='cursor-pointer' width={46} />

@@ -52,7 +52,7 @@ function MessageList() {
             className="px-2 overflow-y-scroll text-black flex flex-col h-full"
         >
             {messageList.map((message) => (
-                <div id={message.id} key={message.id} className="w-full">
+                <div id={message.id} key={message.id} className="w-full flex flex-col">
                     <MessageBox
                         text={message.text}
                         author={message.author}
