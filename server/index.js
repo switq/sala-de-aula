@@ -17,9 +17,9 @@ let activeUsers = [];
 
 const onJoin = ({ username, id, character, ip }) => {
   // Checa se já existe um usuário conectado com o mesmo IP
-  if (activeUsers.some(user => user.ip === ip)) {
-    return { success: false, message: "User from this device is already connected" };
-  }
+  // if (activeUsers.some(user => user.ip === ip)) {
+  //   return { success: false, message: "User from this device is already connected" };
+  // }
 
   let finalUsername = username;
   // Checa se o username já está em uso
