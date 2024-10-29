@@ -28,7 +28,7 @@ function Classroom() {
 
     return (
         <ConnectionProvider>
-            <div className="h-full flex flex-col">
+            <div className="h-[100dvh] flex flex-col">
                 <Room>
                     <DesksContainer />
                 </Room>
