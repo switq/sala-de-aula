@@ -9,6 +9,18 @@ import { cleanScroll } from "../../store/reducers/appReducer";
 import styled from "styled-components";
 import Loading from "../../components/Loading";
 
+const getClientIP = async () => {
+    try {
+        const response = await fetch("https://api.ipify.org?format=json");
+        const data = await response.json();
+        return data.ip;
+    } catch (error) {
+        console.error("Erro ao obter IP:", error);
+        return null;
+    }
+};
+
+
 function Join() {
     const navigate = useNavigate();
     const auth = useSelector(state => state.auth);
@@ -26,9 +38,12 @@ function Join() {
         if (!username.trim()) return;
 
         await socketService.connect();
-        await socketService.sendMessage('set_user', { username, character });
+        const ipCli = await getClientIP();
+        console.log(ipCli);
+        await socketService.sendMessage('set_user', { username, character, ipCli });
         navigate("/classroom");
     };
+
 
     if (auth.isLoading) {
         return <Loading characterID={auth?.character} />;
