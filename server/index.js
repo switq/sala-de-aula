@@ -68,7 +68,7 @@ io.on('connection', socket => {
     io.emit('receive_message', {
       text,
       authorId: socket.id,
-      author: activeUsers(user => user.id == socket.id)?.username || 'Bananão',
+      author: activeUsers?.find(user => user.id == socket.id)?.username || 'Bananão',
       id: uuid(),
     });
   });
