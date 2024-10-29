@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../utils/constants";
 import store from '../store';
-import { setUserConnected, setUserDisconnected } from "../store/reducers/authReducer";
+import { setUserConnected, setUserDisconnected, setLoading } from "../store/reducers/authReducer";
 
 const dispatch = store.dispatch;
 
@@ -9,9 +9,11 @@ class SocketService {
     socket;
 
     async connect() {
+        dispatch(setLoading(true));  // Ativa o loading
+
         this.socket = io(SOCKET_URL, {
-            transports: ['websocket'],  // Forçar uso de WebSocket
-        }); console.log(SOCKET_URL)
+            transports: ['websocket'],
+        });
 
         this.socket.on('connect', () => {
             dispatch(setUserConnected(this.socket.id));
@@ -22,6 +24,18 @@ class SocketService {
             dispatch(setUserDisconnected());
             console.log('socket disconnected');
         });
+
+        this.socket.on('connect_error', () => {
+            dispatch(setLoading(false));  // Desativa o loading em caso de erro
+        });
+    }
+
+    async disconnect() {
+        if (this.socket) {
+            this.socket.disconnect();
+            dispatch(setUserDisconnected());
+            console.log('socket disconnected manually');
+        }
     }
 
     subscribe(event, callback) {
@@ -39,15 +53,6 @@ class SocketService {
     async sendMessage(event, data) {
         if (this.socket) {
             this.socket.emit(event, data);
-        }
-    }
-
-    // Função para desconectar o socket
-    async disconnect() {
-        if (this.socket) {
-            this.socket.disconnect();  // Desconecta do socket
-            dispatch(setUserDisconnected());  // Atualiza o estado para desconectado
-            console.log('socket disconnected manually');
         }
     }
 }

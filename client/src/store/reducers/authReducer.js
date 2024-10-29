@@ -6,6 +6,7 @@ const initialState = {
     character: 0,
     username: '',
     isConnected: false,
+    isLoading: false
 };
 
 const authSlice = createSlice({
@@ -15,10 +16,12 @@ const authSlice = createSlice({
         setUserConnected: (state, action) => {
             state.isConnected = true;
             state.id = action.payload;
+            state.isLoading = false;  // Desativa o loading após conectar
         },
         setUserDisconnected: (state) => {
             state.isConnected = false;
             state.id = null;
+            state.isLoading = false;  // Desativa o loading após conectar
         },
         updateUser: (state, action) => {
             state.id = action.payload;
@@ -28,10 +31,13 @@ const authSlice = createSlice({
         },
         setUsername: (state, action) => {
             state.username = action.payload;
-        }
+        },
+        setLoading: (state, action) => {  // Novo reducer para ativar/desativar o loading
+            state.isLoading = action.payload;
+        },
     },
 });
 
-export const { setUserConnected, setUserDisconnected, updateUser, setCharacter, setUsername } = authSlice.actions;
+export const { setUserConnected, setUserDisconnected, updateUser, setCharacter, setUsername, setLoading } = authSlice.actions;
 
 export default authSlice.reducer;

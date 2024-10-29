@@ -36,7 +36,7 @@ function Loading({ characterID }) {
                 <Dot delay="0.4s">.</Dot>
             </span>
             {characterID >= 0 &&
-                <Character size={200} />
+                <Character characterID={characterID} size={200} />
             }
         </div>
     );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CharacterSelector from "../../components/CharacterSelector";
 import NameInput from "../../components/NameInput";
 import { JoinContainer } from "./styles";
@@ -13,28 +13,25 @@ function Join() {
     const navigate = useNavigate();
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (auth.isConnected)
-            socketService.disconnect()
-        dispatch(cleanScroll())
+        if (auth.isConnected) {
+            socketService.disconnect();
+        }
+        dispatch(cleanScroll());
     }, []);
 
     const submit = async () => {
         const { username, character } = auth;
         if (!username.trim()) return;
-        setLoading(true)
-        await socketService.connect();
-        await socketService.sendMessage('set_user', { username, character })
-        navigate("/classroom");
-        setLoading(false)
-    }
 
-    if (loading) {
-        return (
-            <Loading characterID={auth?.character} />
-        )
+        await socketService.connect();
+        await socketService.sendMessage('set_user', { username, character });
+        navigate("/classroom");
+    };
+
+    if (auth.isLoading) {
+        return <Loading characterID={auth?.character} />;
     }
 
     return (
@@ -85,6 +82,5 @@ const CustomButton = styled.button`
     border-radius: 5px;
   }
 `;
-
 
 export default Join;
